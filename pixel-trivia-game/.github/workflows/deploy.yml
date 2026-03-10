@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+on:
+  # 當有程式碼推送到 main 分支時觸發
+  push:
+    branches: ["main", "master"]
+  # 允許手動從 Actions 頁籤觸發
+  workflow_dispatch:
+
+# 設定權限以允許部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 確保不會有兩個以上的部署同時進行
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        # 這裡會將 GitHub Secrets 的環境變數注入到前端打包檔案中
+        # 並且自動設定基底路徑 (--base) 為儲存庫名稱，以避免 GitHub Pages 資源載入錯誤 (404)
+        run: npm run build -- --base=/${{ github.event.repository.name }}/
+        env:
+          VITE_GOOGLE_APP_SCRIPT_URL: ${{ secrets.VITE_GOOGLE_APP_SCRIPT_URL }}
+          VITE_PASS_THRESHOLD: ${{ secrets.VITE_PASS_THRESHOLD || '3' }}
+          VITE_QUESTION_COUNT: ${{ secrets.VITE_QUESTION_COUNT || '5' }}
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Vite 預設會打包到 dist 資料夾
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

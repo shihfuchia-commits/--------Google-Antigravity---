@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+:root {
+  --bg-color: #1E1E1E;
+  --text-color: #F0F0F0;
+  --primary-color: #007AFF;
+  --secondary-color: #FF453A;
+  --success-color: #34C759;
+  --panel-bg: #2C2C2E;
+  --border-color: #3A3A3C;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Microsoft JhengHei', 'Inter', 'Arial', sans-serif;
+  font-size: 16px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.6;
+}
+
+#root {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--text-color);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h1 { font-size: 28px; }
+h2 { font-size: 22px; }
+h3 { font-size: 18px; }
+
+p {
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: #C7C7CC;
+}
+
+/* 現代感面板 (保留原本的 Class Name，但改為科技風格) */
+.pixel-panel {
+  background-color: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 40px 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  margin-bottom: 24px;
+}
+
+/* 現代感按鈕 */
+.pixel-btn {
+  font-family: inherit;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
+  transition: all 0.2s ease;
+  margin: 8px;
+  text-align: center;
+}
+
+.pixel-btn:hover {
+  background-color: #0062CC;
+  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.pixel-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.pixel-btn:disabled {
+  background-color: #555555;
+  color: #888888;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.pixel-btn.secondary {
+  background-color: var(--secondary-color);
+  box-shadow: 0 4px 12px rgba(255, 69, 58, 0.25);
+}
+
+.pixel-btn.secondary:hover {
+  background-color: #D73A31;
+  box-shadow: 0 6px 16px rgba(255, 69, 58, 0.4);
+}
+
+.pixel-btn.full-width {
+  width: 100%;
+  margin: 8px 0;
+}
+
+/* 現代感輸入框 */
+.pixel-input {
+  font-family: inherit;
+  width: 100%;
+  background-color: #1E1E1E;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.pixel-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+}
+
+/* 遊戲畫面特定樣式 */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.boss-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 180px;
+  margin-bottom: 20px;
+  background-color: #1A1A1A;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.boss-image {
+  height: 140px;
+  z-index: 2;
+  /* 柔和的浮動動畫 */
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.question-text {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  min-height: 80px;
+  font-weight: 600;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .options-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #8E8E93;
+  font-weight: 600;
+}
+
+/* 載入動畫 */
+.loading {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 16px;
+  font-weight: 600;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* 結算畫面 */
+.result-score {
+  font-size: 56px;
+  text-align: center;
+  margin: 30px 0;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.result-status {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.status-pass { color: var(--success-color); }
+.status-fail { color: var(--secondary-color); }
